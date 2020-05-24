@@ -1,10 +1,10 @@
-
 import { Component, OnInit } from '@angular/core';
 import { GeoFeatureCollection } from './models/geojson.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Marker } from './models/marker.model';
 import { Ci_vettore } from './models/ci_vett.model';
+
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   lat: number = 45.45227445505016;
   obsCiVett : Observable<Ci_vettore[]>;
   markers : Marker[]
+
   constructor(public http: HttpClient) {
   }
 
@@ -31,23 +32,38 @@ export class AppComponent implements OnInit {
     this.geoJsonObject = data
     console.log(this.geoJsonObject)
   }
-
-   prepareCiVettData = (data: Ci_vettore[]) =>
+ prepareCiVettData = (data: Ci_vettore[]) =>
   {
-    console.log(data); //Verifica di ricevere i vettori energetici
-    this.markers = []; //NB: markers va dichiarata tra le proprietà markers : Marker[]
-    for (const iterator of data) { //Per ogni oggetto del vettore creoa un Marker
+    let latTot = 0; //Uso queste due variabili per calcolare latitudine e longitudine media
+    let lngTot = 0; //E centrare la mappa
+
+    console.log(data);
+    this.markers = [];
+
+    for (const iterator of data) {
       let m = new Marker(iterator.WGS84_X,iterator.WGS84_Y,iterator.CI_VETTORE);
+      latTot += m.lat; //Sommo tutte le latitutidini e longitudini
+      lngTot += m.lng;
       this.markers.push(m);
     }
- }
-  ngOnInit() {
-    this.obsGeoData = this.http.get<GeoFeatureCollection>("https://3000-ce6d9420-db4f-4409-b0e9-101a8fc7fd59.ws-eu01.gitpod.io/");
-    this.obsGeoData.subscribe(this.prepareData);
-    this.obsCiVett = this.http.get<Ci_vettore[]>("https://3000-ce6d9420-db4f-4409-b0e9-101a8fc7fd59.ws-eu01.gitpod.io/ci_vettore/10");
-    this.obsCiVett.subscribe(this.prepareCiVettData);
+    this.lng = lngTot/data.length; //Commenta qui
+    this.lat = latTot/data.length;
+    this.zoom = 16;
   }
 
+  ngOnInit() {
+    this.obsGeoData = this.http.get<GeoFeatureCollection>("https://3000-e27a792f-67c7-4576-8f0d-5313bb9a5266.ws-eu01.gitpod.io/");
+    this.obsGeoData.subscribe(this.prepareData);
+    //Rimuovi la chiamata http a `TUO_URL/ci_vettore/${val}`
+  }
+    cambiaFoglio(foglio) : boolean
+  {
+    let val = foglio.value; //Commenta qui
+    this.obsCiVett = this.http.get<Ci_vettore[]>(`https://3000-e27a792f-67c7-4576-8f0d-5313bb9a5266.ws-eu01.gitpod.io/ci_vettore/${val}`);  //Commenta qui
+    this.obsCiVett.subscribe(this.prepareCiVettData); //Commenta qui
+    console.log(val);
+    return false;
+  }
 
   styleFunc = (feature) => {
     return ({
@@ -56,7 +72,4 @@ export class AppComponent implements OnInit {
       strokeWeight: 1
     });
   }
-
-
 }
-
