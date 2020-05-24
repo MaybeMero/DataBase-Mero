@@ -56,7 +56,7 @@ export class Marker {
         }
         if(this.label.includes("NULL"))
         {
-            this.icon = { url: './assets/img/question-mark-24.ico'};
+            this.icon = new Icon ('./assets/img/question-mark-24.ico', 24);
             this.label = "";
         }
     }
