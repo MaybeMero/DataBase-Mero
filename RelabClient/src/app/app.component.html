@@ -8,6 +8,7 @@
   </agm-marker>
 
   <agm-data-layer [geoJson]="geoJsonObject" [style]="styleFunc">
+  <agm-data-layer [geoJson]="zona" [style]="styleFunc"></agm-data-layer>
   </agm-data-layer>
   <!--Aggiungi un cerchio alla mappa-->
   <agm-circle [latitude]="circleLat" [longitude]="circleLng" 
@@ -21,7 +22,14 @@
   </agm-circle>
 
 </agm-map>
+
+
+<a href="https://66.media.tumblr.com/69a1019c51896a3f9af7ae705144e29b/tumblr_ot7oqejqrH1w9bcsuo1_400.gifv">
+ <img  class="center" src='./assets/img/orsi.webp' ALIGN=RIGHT>
+</a>
+
 <form>
+
   <h3 >Vettori energetici</h3>
   <div>
     <input name="title" #foglio> <!--Aggiunta una variabile di template-->
@@ -30,6 +38,10 @@
   <button (click)="cambiaFoglio(foglio)"> <!--Passiamo le variabili come parametro -->
     Cambia
   </button>
+
 </form>
+
+<h3>Non premere che esplode</h3>
+  <button (click)="all()">Non premere</button>
 
 
