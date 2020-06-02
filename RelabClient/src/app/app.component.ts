@@ -28,9 +28,9 @@ export class AppComponent implements OnInit {
   circleLng: number = 0;
   maxRadius: number = 400; //Voglio evitare raggi troppo grossi
   radius : number = this.maxRadius; //Memorizzo il raggio del cerchio
-  serverUrl : string = "https://3000-df84e61d-f1ef-4eb7-9fd7-661a23c57e4c.ws-eu01.gitpod.io"; 
-  allData: Observable<GeoFeatureCollection>;
-  zone: GeoFeatureCollection;
+  serverUrl : string = "https://3000-f4c3742c-a029-465c-8053-7e4d79ef9595.ws-eu01.gitpod.io"; 
+  info: Observable<GeoFeatureCollection>;
+  zona: GeoFeatureCollection;
 
   constructor(public http: HttpClient) {
   }
@@ -39,9 +39,9 @@ export class AppComponent implements OnInit {
     this.geoJsonObject = data
     console.log(this.geoJsonObject)
   }
-  zoneData = (data: GeoFeatureCollection) => {
-    this.zone = data
-    console.log(this.zone)
+  zonaData = (data: GeoFeatureCollection) => {
+    this.zona = data
+    console.log(this.zona)
   }
  prepareCiVettData = (data: Ci_vettore[]) =>
   {
@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
     cambiaFoglio(foglio) : boolean
   {
     let val = foglio.value; // Seleziona il foglio
-    this.obsCiVett = this.http.get<Ci_vettore[]>(`https://3000-e27a792f-67c7-4576-8f0d-5313bb9a5266.ws-eu01.gitpod.io/ci_vettore/${val}`);  //Realizza delle richieste di tipo get ci_vettore al server
+    this.obsCiVett = this.http.get<Ci_vettore[]>(`https://3000-f4c3742c-a029-465c-8053-7e4d79ef9595.ws-eu01.gitpod.io/ci_vettore/${val}`);  //Realizza delle richieste di tipo get ci_vettore al server
     this.obsCiVett.subscribe(this.prepareCiVettData); //se sottoscribe al metodo prepareCivettoreData per passare la longitudine e latitudine
 
     console.log(val);
@@ -155,8 +155,8 @@ avgColorMap = (media) =>
   }
   all() : boolean
   {
-    this.allData = this.http.get<GeoFeatureCollection>(`https://3000-d612bb3c-da59-4978-90bf-c5b77d1b4039.ws-eu01.gitpod.io/all`);
-    this.allData.subscribe(this.zoneData);
+    this.info = this.http.get<GeoFeatureCollection>(`https://3000-f4c3742c-a029-465c-8053-7e4d79ef9595.ws-eu01.gitpod.io/all`);
+    this.info.subscribe(this.zonaData);
     return false;
   }
 

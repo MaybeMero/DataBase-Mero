@@ -26,7 +26,7 @@ app.get('/ci_vettore/:foglio', function (req, res) {
     sqlUtils.connect(req, res, sqlUtils.geoGeomRequest);
  });
  app.get('/all', function (req, res) {
-   sqlUtils.connect(req, res, sqlUtils.requestAll);
+   sqlUtils.connect(req, res, sqlUtils.MedAll);
 });
 
 app.listen(3000, function () {

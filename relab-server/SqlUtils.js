@@ -86,7 +86,7 @@ module.exports = class SqlUtils {
         //eseguo la query e aspetto il risultato nella callback
         sqlRequest.query(q, (err, result) => { SqlUtils.sendQueryResults(err, result, res) });
     }
-    static requestAll(req, res) {
+    static MedAll(req, res) {
         let sqlRequest = new sql.Request();  //sqlRequest: oggetto che serve a eseguire le query
         let q = 'SELECT ALL [WKT] FROM [Katmai].[dbo].[intMil4326WKT]';
         //eseguo la query e aspetto il risultato nella callback
