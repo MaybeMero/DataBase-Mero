@@ -32,7 +32,7 @@ module.exports = class SqlUtils {
         res.send(coordConverter.generateGeoJson(result.recordset));  //Invio il risultato al Browser
     }
     
- static ciVettRequest(req,res) {
+    static ciVettRequest(req,res) {
         let sqlRequest = new sql.Request();  //sqlRequest: oggetto che serve a eseguire le query
         let foglio = req.params.foglio;
         let q = `SELECT INDIRIZZO, WGS84_X, WGS84_Y, CLASSE_ENE, EP_H_ND, CI_VETTORE, FOGLIO, SEZ
@@ -42,14 +42,13 @@ module.exports = class SqlUtils {
         sqlRequest.query(q, (err, result) => {SqlUtils.sendCiVettResult(err,result,res)}); 
     }
 
-    
-    
     static sendCiVettResult(err,result, res)
     {
-            if (err) console.log(err); // ... error checks
-            res.send(result.recordset);  //Invio il risultato al Browser
+        if (err) console.log(err); // ... error checks
+        res.send(result.recordset);  //Invio il risultato al Browser
     }
-     static ciVettGeoRequest(req,res) {
+
+    static ciVettGeoRequest(req,res) {
         let sqlRequest = new sql.Request();  //sqlRequest: oggetto che serve a eseguire le query
         let x = Number(req.params.lng);
         let y = Number(req.params.lat);
@@ -65,6 +64,7 @@ module.exports = class SqlUtils {
         //eseguo la query e aspetto il risultato nella callback
         sqlRequest.query(q, (err, result) => {SqlUtils.sendCiVettResult(err,result,res)}); 
     }
+
     static geoGeomRequest(req, res) {
         let sqlRequest = new sql.Request();  //sqlRequest: oggetto che serve a eseguire le query
         let x = Number(req.params.lng);
@@ -86,7 +86,8 @@ module.exports = class SqlUtils {
         //eseguo la query e aspetto il risultato nella callback
         sqlRequest.query(q, (err, result) => { SqlUtils.sendQueryResults(err, result, res) });
     }
-    static MedAll(req, res) {
+
+     static requestAll(req, res) {
         let sqlRequest = new sql.Request();  //sqlRequest: oggetto che serve a eseguire le query
         let q = 'SELECT ALL [WKT] FROM [Katmai].[dbo].[intMil4326WKT]';
         //eseguo la query e aspetto il risultato nella callback
