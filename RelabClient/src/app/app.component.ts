@@ -28,9 +28,10 @@ export class AppComponent implements OnInit {
   circleLng: number = 0;
   maxRadius: number = 400; //Voglio evitare raggi troppo grossi
   radius : number = this.maxRadius; //Memorizzo il raggio del cerchio
-  serverUrl : string = "https://3000-f4c3742c-a029-465c-8053-7e4d79ef9595.ws-eu01.gitpod.io"; 
+  serverUrl : string = "https://3000-d468e094-980a-4cfe-a5fb-0e6758819fbb.ws-eu01.gitpod.io"; 
   info: Observable<GeoFeatureCollection>;
   zona: GeoFeatureCollection;
+  img: String;
 
   constructor(public http: HttpClient) {
   }
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
     console.log(this.geoJsonObject)
   }
   zonaData = (data: GeoFeatureCollection) => {
+    this.img=undefined;
     this.zona = data
     console.log(this.zona)
   }
@@ -121,7 +123,7 @@ export class AppComponent implements OnInit {
     cambiaFoglio(foglio) : boolean
   {
     let val = foglio.value; // Seleziona il foglio
-    this.obsCiVett = this.http.get<Ci_vettore[]>(`https://3000-f4c3742c-a029-465c-8053-7e4d79ef9595.ws-eu01.gitpod.io/ci_vettore/${val}`);  //Realizza delle richieste di tipo get ci_vettore al server
+    this.obsCiVett = this.http.get<Ci_vettore[]>(`https://3000-d468e094-980a-4cfe-a5fb-0e6758819fbb.ws-eu01.gitpod.io/ci_vettore/${val}`);  //Realizza delle richieste di tipo get ci_vettore al server
     this.obsCiVett.subscribe(this.prepareCiVettData); //se sottoscribe al metodo prepareCivettoreData per passare la longitudine e latitudine
 
     console.log(val);
@@ -155,7 +157,8 @@ avgColorMap = (media) =>
   }
   all() : boolean
   {
-    this.info = this.http.get<GeoFeatureCollection>(`https://3000-f4c3742c-a029-465c-8053-7e4d79ef9595.ws-eu01.gitpod.io/all`);
+    this.img="https://media.tenor.com/images/0e80e64f17e2114fb714f5676e7db038/tenor.gif"
+    this.info = this.http.get<GeoFeatureCollection>(`https://3000-d468e094-980a-4cfe-a5fb-0e6758819fbb.ws-eu01.gitpod.io/all`);
     this.info.subscribe(this.zonaData);
     return false;
   }
